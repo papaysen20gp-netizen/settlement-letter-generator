@@ -189,6 +189,7 @@
           <button class="primary" onclick="copyLetter()">Copy Letter</button>
           
           <button class="light" onclick="window.print()">Save PDF</button>
+          <button class="secondary" onclick="downloadPDF()">Download PDF</button>
           <button class="light" onclick="resetForm()">Reset</button>
         </div>
         <div class="hint">Tip: Use “Print / Save PDF” to save the generated letter as PDF from browser.</div>
@@ -287,6 +288,17 @@ Registered Email ID: ${val('email')}`;
     function resetForm() {
       ids.forEach(id => document.getElementById(id).value = '');
       generateLetter();
+
+    function downloadPDF() {
+      const content = document.getElementById('preview').innerText;
+      const win = window.open('', '', 'height=700,width=700');
+      win.document.write('<html><head><title>PDF</title>');
+      win.document.write('</head><body>');
+      win.document.write('<pre>' + content + '</pre>');
+      win.document.write('</body></html>');
+      win.document.close();
+      win.print();
+    }
     }
 
     generateLetter();
