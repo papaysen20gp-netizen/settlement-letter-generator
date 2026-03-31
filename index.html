@@ -1,37 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Settlement Letter Generator</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #1f2937;
-    }
-    .wrap {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-    h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-    }
-    .sub {
-      margin-bottom: 24px;
-      color: #4b5563;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+<title>Settlement Letter Generator</title>
+</head>
+<body>
+
+<h2>Settlement Letter Generator</h2>
+
+<input id="name" placeholder="Client Name"><br><br>
+<input id="bank" placeholder="Bank Name"><br><br>
+<input id="loan" placeholder="Loan Number"><br><br>
+
+<button onclick="gen()">Generate</button>
+
+<p id="out"></p>
+
+<script>
+function gen(){
+let name = document.getElementById("name").value;
+let bank = document.getElementById("bank").value;
+let loan = document.getElementById("loan").value;
+
+document.getElementById("out").innerText =
+"Dear "+bank+",\n\nI "+name+" want settlement of loan "+loan+".";
+}
+</script>
+
+</body>
+</html>
