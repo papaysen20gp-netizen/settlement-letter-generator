@@ -1,30 +1,291 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Settlement Letter Generator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settlement Letter Generator</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+    .sub {
+      margin-bottom: 24px;
+      color: #4b5563;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .field.full {
+      grid-column: 1 / -1;
+    }
+    label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #374151;
+    }
+    input, textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+    input:focus, textarea:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    button {
+      border: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .primary { background: #2563eb; color: white; }
+    .secondary { background: #111827; color: white; }
+    .light { background: #e5e7eb; color: #111827; }
+    .preview {
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-size: 15px;
+      min-height: 700px;
+      background: #fcfcfd;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .hint {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+    @media (max-width: 1000px) {
+      .grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body { background: white; }
+      .no-print { display: none !important; }
+      .grid { display: block; }
+      .card { box-shadow: none; border: none; padding: 0; }
+      .preview { border: none; padding: 0; min-height: auto; }
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <h1>Settlement Letter Generator</h1>
+    <div class="sub no-print">Fill the form on the left. The settlement letter will be created automatically on the right.</div>
 
-<h2>Settlement Letter Generator</h2>
+    <div class="grid">
+      <div class="card no-print">
+        <h2>Client & Case Details</h2>
+        <div class="form-grid">
+          <div class="field full">
+            <label>Client Name</label>
+            <input id="clientName" placeholder="Enter client name" />
+          </div>
 
-<input id="name" placeholder="Client Name"><br><br>
-<input id="bank" placeholder="Bank Name"><br><br>
-<input id="loan" placeholder="Loan Number"><br><br>
+          <div class="field">
+            <label>Bank Registered Mobile Number</label>
+            <input id="mobile" placeholder="Enter mobile number" />
+          </div>
 
-<button onclick="gen()">Generate</button>
+          <div class="field">
+            <label>Bank Registered Email ID</label>
+            <input id="email" placeholder="Enter email ID" />
+          </div>
 
-<p id="out"></p>
+          <div class="field">
+            <label>Bank / NBFC Name</label>
+            <input id="bankName" placeholder="Enter bank or NBFC name" />
+          </div>
 
-<script>
-function gen(){
-let name = document.getElementById("name").value;
-let bank = document.getElementById("bank").value;
-let loan = document.getElementById("loan").value;
+          <div class="field">
+            <label>Date</label>
+            <input id="date" type="date" />
+          </div>
 
-document.getElementById("out").innerText =
-"Dear "+bank+",\n\nI "+name+" want settlement of loan "+loan+".";
-}
-</script>
+          <div class="field full">
+            <label>Credit Card / Loan Number</label>
+            <input id="loanNumber" placeholder="Enter loan or card number" />
+          </div>
 
+          <div class="field full">
+            <label>Settlement Reason</label>
+            <textarea id="reason" placeholder="Example: Due to severe financial hardship, income loss, business loss, medical issue, or family crisis, the client is unable to continue regular EMI/card payments and is requesting a one-time settlement."></textarea>
+          </div>
+
+          <div class="field full">
+            <label>Preferred Location Address</label>
+            <textarea id="location" placeholder="Enter preferred address for meeting / communication"></textarea>
+          </div>
+
+          <div class="field">
+            <label>Legal Advisor Name</label>
+            <input id="advisorName" placeholder="Enter legal advisor name" />
+          </div>
+
+          <div class="field">
+            <label>Legal Advisor Email ID</label>
+            <input id="advisorEmail" placeholder="Enter legal advisor email" />
+          </div>
+
+          <div class="field">
+            <label>Legal Advisor Mobile Number</label>
+            <input id="advisorMobile" placeholder="Enter legal advisor mobile" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" onclick="copyLetter()">Copy Letter</button>
+          <button class="secondary" onclick="downloadLetter()">Download .txt</button>
+          <button class="light" onclick="window.print()">Print / Save PDF</button>
+          <button class="light" onclick="resetForm()">Reset</button>
+        </div>
+        <div class="hint">Tip: Use “Print / Save PDF” to save the generated letter as PDF from browser.</div>
+      </div>
+
+      <div class="card">
+        <h2>Generated Settlement Letter</h2>
+        <div id="preview" class="preview"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ids = [
+      'clientName','mobile','email','bankName','date','loanNumber',
+      'reason','location','advisorName','advisorEmail','advisorMobile'
+    ];
+
+    ids.forEach(id => {
+      document.getElementById(id).addEventListener('input', generateLetter);
+    });
+
+    function formatDate(value) {
+      if (!value) return '____________';
+      const d = new Date(value);
+      if (isNaN(d)) return value;
+      return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+    }
+
+    function val(id, fallback = '____________') {
+      const v = document.getElementById(id).value.trim();
+      return v || fallback;
+    }
+
+    function generateLetter() {
+      const letter = `To
+The Manager / Authorized Officer
+${val('bankName')}
+
+Date: ${formatDate(document.getElementById('date').value)}
+
+Subject: Request for Settlement of Credit Card / Loan Account No. ${val('loanNumber')}
+
+Respected Sir/Madam,
+
+I, ${val('clientName')}, holding registered mobile number ${val('mobile')} and registered email ID ${val('email')}, am writing this letter with regard to my Credit Card / Loan Account No. ${val('loanNumber')} maintained with ${val('bankName')}.
+
+Due to the following genuine financial difficulties, I am presently unable to continue regular repayment of the outstanding amount:
+${val('reason')}
+
+In view of the above circumstances, I sincerely request you to consider my account for a settlement option and provide me with the best possible one-time settlement proposal. I am willing to resolve this matter amicably and request your support in closing the account on humanitarian and practical grounds.
+
+I further request that all future communication regarding this settlement matter may also be coordinated with my legal advisor, whose details are given below:
+
+Legal Advisor Name: ${val('advisorName')}
+Legal Advisor Email ID: ${val('advisorEmail')}
+Legal Advisor Mobile Number: ${val('advisorMobile')}
+Preferred Location Address: ${val('location')}
+
+I kindly request you to share the settlement terms, total payable amount, validity period, and payment procedure in writing at the earliest. I would appreciate your positive consideration and an opportunity to settle this account peacefully.
+
+Thank you for your understanding and cooperation.
+
+Sincerely,
+
+${val('clientName')}
+Registered Mobile Number: ${val('mobile')}
+Registered Email ID: ${val('email')}`;
+
+      document.getElementById('preview').textContent = letter;
+    }
+
+    function copyLetter() {
+      const text = document.getElementById('preview').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Settlement letter copied successfully.');
+      });
+    }
+
+    function downloadLetter() {
+      const text = document.getElementById('preview').textContent;
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'settlement-letter.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function resetForm() {
+      ids.forEach(id => document.getElementById(id).value = '');
+      generateLetter();
+    }
+
+    generateLetter();
+  </script>
 </body>
 </html>
