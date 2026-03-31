@@ -187,7 +187,7 @@
 
         <div class="actions">
           <button class="primary" onclick="copyLetter()">Copy Letter</button>
-          <button class="secondary" onclick="downloadLetter()">Download .txt</button>
+          
           <button class="light" onclick="window.print()">Save PDF</button>
           <button class="light" onclick="resetForm()">Reset</button>
         </div>
@@ -232,7 +232,33 @@ Date: ${formatDate(document.getElementById('date').value)}
 
 Subject: REQUEST FOR SETTLEMENT OF OUTSTANDING DUES FOR PERSONAL LOAN / CREDIT CARD
 
-Respected Sir/Madam,\n\nI, ${val('clientName')}, holding registered mobile number ${val('mobile')} and registered email ID ${val('email')}, respectfully submit this request regarding my Personal Loan / Credit Card Account No. ${val('loanNumber')} maintained with ${val('bankName')}.\n\nI would like to state that due to genuine and unavoidable financial hardship, I am presently facing serious difficulty in continuing the regular repayment of my outstanding dues. My present financial condition has become unstable, and despite my sincere intention to repay, I am unable to maintain the scheduled payments in the normal course. The detailed reason for my present hardship is mentioned below:\n${val('reason')}\n\nIn these circumstances, I humbly request your good office to consider my account for a suitable settlement of the outstanding dues and to provide me with the most reasonable and best possible one-time settlement proposal. My intention is not to avoid repayment, but to resolve the matter amicably and in a practical manner, considering my current financial limitations. A fair settlement opportunity from your end would greatly help me in closing this account peacefully and with dignity.\n\nI further request you to kindly confirm the complete settlement amount, payment terms, validity period of the offer, and the mode of payment in writing so that I may review the proposal and take the necessary steps accordingly. This will also help avoid any misunderstanding in the future.\n\nFor smooth coordination and communication regarding this matter, I request that future correspondence may also be shared with my legal advisor, whose details are provided below:\n\nLegal Advisor Name: ${val('advisorName')}\nLegal Advisor Email ID: ${val('advisorEmail')}\nLegal Advisor Mobile Number: ${val('advisorMobile')}\nPreferred Location Address: ${val('location')}\n\nI sincerely hope that you will consider my present situation sympathetically and extend your cooperation by issuing a suitable settlement offer at the earliest. I shall remain grateful for your positive support and understanding in helping me resolve this matter.\n\nThank you for your time, understanding, and kind consideration.\n\nSincerely,
+Respected Sir/Madam,
+
+I, ${val('clientName')}, holding registered mobile number ${val('mobile')} and registered email ID ${val('email')}, respectfully submit this request regarding my Personal Loan / Credit Card Account No. ${val('loanNumber')} maintained with ${val('bankName')}.
+
+I would like to state that due to genuine and unavoidable financial hardship, I am presently facing serious difficulty in continuing the regular repayment of my outstanding dues. My present financial condition has become unstable, and despite my sincere intention to repay, I am unable to maintain the scheduled payments in the normal course. The detailed reason for my present hardship is mentioned below:
+${val('reason')}
+
+In these circumstances, I humbly request your good office to consider my account for a suitable settlement of the outstanding dues and to provide me with the most reasonable and best possible one-time settlement proposal. My intention is not to avoid repayment, but to resolve the matter amicably and in a practical manner, considering my current financial limitations. A fair settlement opportunity from your end would greatly help me in closing this account peacefully and with dignity.
+
+I further request you to kindly confirm the complete settlement amount, payment terms, validity period of the offer, and the mode of payment in writing so that I may review the proposal and take the necessary steps accordingly. This will also help avoid any misunderstanding in the future.
+
+For smooth coordination and communication regarding this matter, I request that future correspondence may also be shared with my legal advisor, whose details are provided below:
+
+Legal Advisor Name: ${val('advisorName')}
+Legal Advisor Email ID: ${val('advisorEmail')}
+Legal Advisor Mobile Number: ${val('advisorMobile')}
+Preferred Location Address: ${val('location')}
+
+I sincerely hope that you will consider my present situation sympathetically and extend your cooperation by issuing a suitable settlement offer at the earliest. I shall remain grateful for your positive support and understanding in helping me resolve this matter.
+
+Additionally, I would like to clearly mention that the address provided at the time of availing the loan is no longer suitable for any personal visits. I am not comfortable meeting any field agents at that address. If any discussion is required, I request that it be conducted at the preferred address mentioned above or through official communication channels only.
+
+I also hereby authorize my legal advisor to represent me and handle all matters related to this case on my behalf. You may coordinate directly with my legal advisor for any further communication, clarification, or settlement discussion regarding my account.
+
+Thank you for your time, understanding, and kind consideration.
+
+Sincerely,
 
 ${val('clientName')}
 Registered Mobile Number: ${val('mobile')}
