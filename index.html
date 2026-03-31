@@ -1,212 +1,106 @@
 <!DOCTYPE html>
-    @media print {
-      body { background: white; }
-      .no-print { display: none !important; }
-      .grid { display: block; }
-      .card { box-shadow: none; border: none; padding: 0; }
-      .preview { border: none; padding: 0; min-height: auto; }
-    }
-  </style>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settlement Letter Generator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f7fb;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+}
+
+input, textarea {
+  width: 100%;
+  margin: 5px 0;
+  padding: 8px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#output {
+  white-space: pre-wrap;
+}
+</style>
+
 </head>
 <body>
-  <div class="wrap">
-    <h1>Settlement Letter Generator</h1>
-    <div class="sub no-print">Fill the form on the left. The settlement letter will be created automatically on the right.</div>
 
+<h1>Settlement Letter Generator</h1>
 
-    <div class="grid">
-      <div class="card no-print">
-        <h2>Client & Case Details</h2>
-        <div class="form-grid">
-          <div class="field full">
-            <label>Client Name</label>
-            <input id="clientName" placeholder="Enter client name" />
-          </div>
+<div class="container">
 
+<div class="box">
+<h3>Client Details</h3>
 
-          <div class="field">
-            <label>Bank Registered Mobile Number</label>
-            <input id="mobile" placeholder="Enter mobile number" />
-          </div>
+<input id="name" placeholder="Client Name">
+<input id="mobile" placeholder="Mobile Number">
+<input id="email" placeholder="Email ID">
+<input id="bank" placeholder="Bank Name">
+<input id="loan" placeholder="Loan Number">
+<textarea id="reason" placeholder="Settlement Reason"></textarea>
 
+<button onclick="generate()">Generate Letter</button>
 
-          <div class="field">
-            <label>Bank Registered Email ID</label>
-            <input id="email" placeholder="Enter email ID" />
-          </div>
+</div>
 
+<div class="box">
+<h3>Generated Letter</h3>
+<div id="output"></div>
+</div>
 
-          <div class="field">
-            <label>Bank / NBFC Name</label>
-            <input id="bankName" placeholder="Enter bank or NBFC name" />
-          </div>
+</div>
 
+<script>
+function generate() {
+  let name = document.getElementById("name").value;
+  let mobile = document.getElementById("mobile").value;
+  let email = document.getElementById("email").value;
+  let bank = document.getElementById("bank").value;
+  let loan = document.getElementById("loan").value;
+  let reason = document.getElementById("reason").value;
 
-          <div class="field">
-            <label>Date</label>
-            <input id="date" type="date" />
-          </div>
+  let text = `To
+The Manager
+${bank}
 
-
-          <div class="field full">
-            <label>Credit Card / Loan Number</label>
-            <input id="loanNumber" placeholder="Enter loan or card number" />
-          </div>
-
-
-          <div class="field full">
-            <label>Settlement Reason</label>
-            <textarea id="reason" placeholder="Example: Due to severe financial hardship, income loss, business loss, medical issue, or family crisis, the client is unable to continue regular EMI/card payments and is requesting a one-time settlement."></textarea>
-          </div>
-
-
-          <div class="field full">
-            <label>Preferred Location Address</label>
-            <textarea id="location" placeholder="Enter preferred address for meeting / communication"></textarea>
-          </div>
-
-
-          <div class="field">
-            <label>Legal Advisor Name</label>
-            <input id="advisorName" placeholder="Enter legal advisor name" />
-          </div>
-
-
-          <div class="field">
-            <label>Legal Advisor Email ID</label>
-            <input id="advisorEmail" placeholder="Enter legal advisor email" />
-          </div>
-
-
-          <div class="field">
-            <label>Legal Advisor Mobile Number</label>
-            <input id="advisorMobile" placeholder="Enter legal advisor mobile" />
-          </div>
-        </div>
-
-
-        <div class="actions">
-          <button class="primary" onclick="copyLetter()">Copy Letter</button>
-          <button class="secondary" onclick="downloadLetter()">Download .txt</button>
-          <button class="light" onclick="window.print()">Print / Save PDF</button>
-          <button class="light" onclick="resetForm()">Reset</button>
-        </div>
-        <div class="hint">Tip: Use “Print / Save PDF” to save the generated letter as PDF from browser.</div>
-      </div>
-
-
-      <div class="card">
-        <h2>Generated Settlement Letter</h2>
-        <div id="preview" class="preview"></div>
-      </div>
-    </div>
-  </div>
-
-
-  <script>
-    const ids = [
-      'clientName','mobile','email','bankName','date','loanNumber',
-      'reason','location','advisorName','advisorEmail','advisorMobile'
-    ];
-
-
-    ids.forEach(id => {
-      document.getElementById(id).addEventListener('input', generateLetter);
-    });
-
-
-    function formatDate(value) {
-      if (!value) return '____________';
-      const d = new Date(value);
-      if (isNaN(d)) return value;
-      return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
-    }
-
-
-    function val(id, fallback = '____________') {
-      const v = document.getElementById(id).value.trim();
-      return v || fallback;
-    }
-
-
-    function generateLetter() {
-      const letter = `To
-The Manager / Authorized Officer
-${val('bankName')}
-
-
-Date: ${formatDate(document.getElementById('date').value)}
-
-
-Subject: Request for Settlement of Credit Card / Loan Account No. ${val('loanNumber')}
-
+Subject: Settlement Request
 
 Respected Sir/Madam,
 
+I, ${name}, request settlement of my loan (${loan}).
 
-I, ${val('clientName')}, holding registered mobile number ${val('mobile')} and registered email ID ${val('email')}, am writing this letter with regard to my Credit Card / Loan Account No. ${val('loanNumber')} maintained with ${val('bankName')}.
+Due to financial issues:
+${reason}
 
+Kindly provide settlement option.
 
-Due to the following genuine financial difficulties, I am presently unable to continue regular repayment of the outstanding amount:
-${val('reason')}
+Mobile: ${mobile}
+Email: ${email}
 
+Thank you.`;
 
-In view of the above circumstances, I sincerely request you to consider my account for a settlement option and provide me with the best possible one-time settlement proposal. I am willing to resolve this matter amicably and request your support in closing the account on humanitarian and practical grounds.
+  document.getElementById("output").innerText = text;
+}
+</script>
 
-
-I further request that all future communication regarding this settlement matter may also be coordinated with my legal advisor, whose details are given below:
-
-
-Legal Advisor Name: ${val('advisorName')}
-Legal Advisor Email ID: ${val('advisorEmail')}
-Legal Advisor Mobile Number: ${val('advisorMobile')}
-Preferred Location Address: ${val('location')}
-
-
-I kindly request you to share the settlement terms, total payable amount, validity period, and payment procedure in writing at the earliest. I would appreciate your positive consideration and an opportunity to settle this account peacefully.
-
-
-Thank you for your understanding and cooperation.
-
-
-Sincerely,
-
-
-${val('clientName')}
-Registered Mobile Number: ${val('mobile')}
-Registered Email ID: ${val('email')}`;
-
-
-      document.getElementById('preview').textContent = letter;
-    }
-
-
-    function copyLetter() {
-      const text = document.getElementById('preview').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Settlement letter copied successfully.');
-      });
-    }
-
-
-    function downloadLetter() {
-      const text = document.getElementById('preview').textContent;
-      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'settlement-letter.txt';
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-
-
-    function resetForm() {
-      ids.forEach(id => document.getElementById(id).value = '');
-      generateLetter();
-    }
-
-
-    generateLetter();
-  </script>
 </body>
 </html>
