@@ -1,59 +1,199 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Settlement Letter Generator</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Settlement Letter Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f4f7fb;
+      margin:0;
+      padding:20px;
+    }
+    .container{
+      max-width:1200px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+    .box{
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    }
+    h1{
+      text-align:center;
+      margin-bottom:20px;
+    }
+    label{
+      display:block;
+      margin-top:10px;
+      font-weight:bold;
+      font-size:14px;
+    }
+    input, textarea{
+      width:100%;
+      padding:10px;
+      margin-top:5px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:14px;
+      box-sizing:border-box;
+    }
+    textarea{
+      min-height:90px;
+      resize:vertical;
+    }
+    button{
+      margin-top:15px;
+      padding:12px 18px;
+      border:none;
+      border-radius:8px;
+      background:#111827;
+      color:#fff;
+      cursor:pointer;
+      font-size:14px;
+      font-weight:bold;
+    }
+    #output{
+      white-space:pre-wrap;
+      line-height:1.7;
+      font-size:15px;
+    }
+    @media(max-width:900px){
+      .container{grid-template-columns:1fr;}
+    }
+  </style>
 </head>
+<body>
 
-<body style="font-family: Arial; padding:20px;">
+<h1>Settlement Letter Generator</h1>
 
-<h2>Settlement Letter Generator</h2>
+<div class="container">
+  <div class="box">
+    <label>Client Name</label>
+    <input id="clientName" placeholder="Enter client name">
 
-<input id="name" placeholder="Client Name"><br><br>
-<input id="bank" placeholder="Bank Name"><br><br>
-<input id="loan" placeholder="Loan Number"><br><br>
+    <label>Bank Registered Mobile Number</label>
+    <input id="mobile" placeholder="Enter mobile number">
 
-<textarea id="reason" placeholder="Reason"></textarea><br><br>
+    <label>Bank Registered Email ID</label>
+    <input id="email" placeholder="Enter email ID">
 
-<button onclick="generate()">Generate</button>
-<button onclick="downloadPDF()">Download PDF</button>
+    <label>Bank / NBFC Name</label>
+    <input id="bankName" placeholder="Enter bank name">
 
-<pre id="output"></pre>
+    <label>Date</label>
+    <input id="date" type="date">
+
+    <label>Credit Card / Loan Number</label>
+    <input id="loanNumber" placeholder="Enter loan / card number">
+
+    <label>Settlement Reason</label>
+    <textarea id="reason" placeholder="Enter settlement reason"></textarea>
+
+    <label>Preferred Location Address</label>
+    <textarea id="location" placeholder="Enter current preferred address"></textarea>
+
+    <label>Legal Advisor Name</label>
+    <input id="advisorName" placeholder="Enter legal advisor name">
+
+    <label>Legal Advisor Email ID</label>
+    <input id="advisorEmail" placeholder="Enter legal advisor email">
+
+    <label>Legal Advisor Mobile Number</label>
+    <input id="advisorMobile" placeholder="Enter legal advisor mobile number">
+
+    <button onclick="generateLetter()">Generate Letter</button>
+    <button onclick="downloadPDF()">Download PDF</button>
+  </div>
+
+  <div class="box">
+    <div id="output"></div>
+  </div>
+</div>
 
 <script>
-function generate(){
-let name = document.getElementById("name").value;
-let bank = document.getElementById("bank").value;
-let loan = document.getElementById("loan").value;
-let reason = document.getElementById("reason").value;
+function val(id){
+  return document.getElementById(id).value.trim() || "____________";
+}
 
-let text = `Subject: REQUEST FOR SETTLEMENT OF OUTSTANDING DUES
+function formatDate(value){
+  if(!value) return "____________";
+  const d = new Date(value);
+  return d.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+}
+
+function generateLetter(){
+  const letter = `To
+The Manager / Authorized Officer
+${val('bankName')}
+
+Date: ${formatDate(document.getElementById('date').value)}
+
+SUBJECT: REQUEST FOR SETTLEMENT OF OUTSTANDING DUES FOR PERSONAL LOAN / CREDIT CARD
 
 Respected Sir/Madam,
 
-I, ${name}, request settlement of my loan (${loan}) from ${bank}.
+I, ${val('clientName')}, holding registered mobile number ${val('mobile')} and registered email ID ${val('email')}, am writing this letter with reference to my Personal Loan / Credit Card Account No. ${val('loanNumber')} maintained with ${val('bankName')}.
 
-Reason:
-${reason}
+Due to genuine financial hardship and unavoidable circumstances, I am presently unable to continue regular repayment of the outstanding dues. The reason for my present financial difficulty is stated below:
 
-I also request no agent visit at old address. Only contact at new address.
+${val('reason')}
 
-My legal advisor is authorized to handle my case.
+In view of the above circumstances, I humbly request your good office to kindly consider my account for a suitable settlement and provide me with the best possible one-time settlement proposal. My intention is to resolve the matter amicably and close the account in a peaceful and practical manner.
 
-Thank you.`;
+I would also like to clearly mention that the address provided by me at the time of availing the loan is not suitable for any personal visit by any field agent, and I am not comfortable meeting any agent at that old address. If any discussion or visit is required, the same may kindly be arranged only at the address mentioned below, where I may communicate if necessary:
 
-document.getElementById("output").innerText = text;
+Preferred Location Address:
+${val('location')}
+
+Further, I hereby authorize my legal advisor, whose details are mentioned below, to represent me and handle all communications, discussions, and settlement-related matters on my behalf in relation to this case.
+
+Legal Advisor Name: ${val('advisorName')}
+Legal Advisor Email ID: ${val('advisorEmail')}
+Legal Advisor Mobile Number: ${val('advisorMobile')}
+
+I therefore request you to kindly share the complete settlement amount, payment terms, validity period, and procedure in writing at the earliest for further necessary action.
+
+I shall be grateful for your sympathetic consideration and cooperation in this matter.
+
+Sincerely,
+
+${val('clientName')}
+Registered Mobile Number: ${val('mobile')}
+Registered Email ID: ${val('email')}`;
+
+  document.getElementById("output").innerText = letter;
 }
 
 function downloadPDF(){
-const { jsPDF } = window.jspdf;
-let doc = new jsPDF();
+  generateLetter();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const text = document.getElementById("output").innerText;
+  const lines = doc.splitTextToSize(text, 180);
+  let y = 15;
 
-let text = document.getElementById("output").innerText;
+  doc.setFont("times", "normal");
+  doc.setFontSize(12);
 
-doc.text(text, 10, 10);
-doc.save("settlement-letter.pdf");
+  lines.forEach(line => {
+    if (y > 280) {
+      doc.addPage();
+      y = 15;
+    }
+    doc.text(line, 10, y);
+    y += 7;
+  });
+
+  doc.save("settlement-letter.pdf");
 }
+
+generateLetter();
 </script>
 
 </body>
