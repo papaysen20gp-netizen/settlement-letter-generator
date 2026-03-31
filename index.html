@@ -1,106 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Settlement Letter Generator</title>
-
-<style>
-body {
-  font-family: Arial;
-  background: #f4f7fb;
-  padding: 20px;
-}
-
-.container {
-  display: flex;
-  gap: 20px;
-}
-
-.box {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 50%;
-}
-
-input, textarea {
-  width: 100%;
-  margin: 5px 0;
-  padding: 8px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px;
-  cursor: pointer;
-}
-
-#output {
-  white-space: pre-wrap;
-}
-</style>
-
-</head>
-<body>
-
-<h1>Settlement Letter Generator</h1>
-
-<div class="container">
-
-<div class="box">
-<h3>Client Details</h3>
-
-<input id="name" placeholder="Client Name">
-<input id="mobile" placeholder="Mobile Number">
-<input id="email" placeholder="Email ID">
-<input id="bank" placeholder="Bank Name">
-<input id="loan" placeholder="Loan Number">
-<textarea id="reason" placeholder="Settlement Reason"></textarea>
-
-<button onclick="generate()">Generate Letter</button>
-
-</div>
-
-<div class="box">
-<h3>Generated Letter</h3>
-<div id="output"></div>
-</div>
-
-</div>
-
-<script>
-function generate() {
-  let name = document.getElementById("name").value;
-  let mobile = document.getElementById("mobile").value;
-  let email = document.getElementById("email").value;
-  let bank = document.getElementById("bank").value;
-  let loan = document.getElementById("loan").value;
-  let reason = document.getElementById("reason").value;
-
-  let text = `To
-The Manager
-${bank}
-
-Subject: Settlement Request
-
-Respected Sir/Madam,
-
-I, ${name}, request settlement of my loan (${loan}).
-
-Due to financial issues:
-${reason}
-
-Kindly provide settlement option.
-
-Mobile: ${mobile}
-Email: ${email}
-
-Thank you.`;
-
-  document.getElementById("output").innerText = text;
-}
-</script>
-
-</body>
-</html>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settlement Letter Generator</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+    .sub {
+      margin-bottom: 24px;
+      color: #4b5563;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
