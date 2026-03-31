@@ -119,6 +119,7 @@
       .preview { border: none; padding: 0; min-height: auto; }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="wrap">
@@ -290,14 +291,30 @@ Registered Email ID: ${val('email')}`;
       generateLetter();
 
     function downloadPDF() {
-      const content = document.getElementById('preview').innerText;
-      const win = window.open('', '', 'height=700,width=700');
-      win.document.write('<html><head><title>PDF</title>');
-      win.document.write('</head><body>');
-      win.document.write('<pre>' + content + '</pre>');
-      win.document.write('</body></html>');
-      win.document.close();
-      win.print();
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+      const text = document.getElementById('preview').innerText || '';
+      const margin = 40;
+      const maxWidth = 515;
+      const lineHeight = 20;
+      const pageHeight = doc.internal.pageSize.height;
+
+      doc.setFont('times', 'normal');
+      doc.setFontSize(12);
+
+      const lines = doc.splitTextToSize(text, maxWidth);
+      let y = margin;
+
+      lines.forEach((line) => {
+        if (y > pageHeight - margin) {
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(line, margin, y);
+        y += lineHeight;
+      });
+
+      doc.save('settlement-letter.pdf');
     }
     }
 
